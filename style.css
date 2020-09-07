@@ -35,7 +35,7 @@ body {
 
 .circle {
     position: absolute;
-    /* z-index: 99; */
+    z-index: 100;
     top: 0;
     border-radius: 50%;
     width: 150px;
@@ -87,8 +87,8 @@ body {
 }
 
 #line {
-    z-index: 99;
-    position: relative;
+    /* z-index: 99; */
+    position: absolute;
     top: 75px; 
     left: 75px; 
     width: 565.34px; 
