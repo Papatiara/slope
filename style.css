@@ -1,65 +1,55 @@
-body, html
-{
-    width: 100%;
+ 
+body, html {
     min-height: 100vh;
-    /* transform-origin: 0 0; */
     height: auto;
-    overflow-y: auto !important;
-    overflow-x: auto !important;
-    /* box-sizing: inherit;  */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: visible;
+    overflow-y: visible; 
 
-   
 }
-
-body {
-    width: 100%; 
-
-    /* margin-top: -300px; */
-    /* z-index: -99; */
-    /* display: block;  */
-    /* background-color: black; */
-    /* width: 120% !important;
-    height: 120% !important;  */
-    /* overflow-y: auto !important;
-    overflow-x: auto !important; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* justify-content: center;
-    align-items: center; */
+#container {
+    position: absolute;
+    overflow-x: visible;
+    overflow-y: visible; 
+    height: 100%!important; 
+    width: 100%!important; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-
-/* *, :after, :before {
-    box-sizing: inherit;
-    -webkit-print-color-adjust: exact;
-} */
-
 .circle {
     position: absolute;
-    z-index: 100;
-    top: 0;
-    border-radius: 50%;
     width: 150px;
     height: 150px;
+    top: 0px;
+    left: 0px;
+    border-radius: 50%;
     background-color: #ff705a;
-    cursor: move;
+    cursor: -webkit-grab;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-x: visible;
+    overflow-y: visible; 
+    
 }
 
-.circle input {
+    .circle input {
     width: 60px;
     height: 20px;
+    margin-left: 10px;
     background-color: #ff705a;
     border: none;
-    margin-left: 10px;
     border-bottom: 1px solid black;
     outline: none;
-}
+    overflow-x: visible;
+    overflow-y: visible;
+} 
 
-.circle2 {
-    z-index: 100;
+ .circle2 {
     position: absolute;
     width: 150px;
     height: 150px;
@@ -72,22 +62,25 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-x: visible;
+    overflow-y: visible;
 }
 
+
 .circle2 input  {
-    margin: auto;
     width: 60px;
     height: 20px;
-    padding-left: 10px;
     margin-left: 10px;
     background-color: #ff705a;
     border: none;
     border-bottom: 1px solid black;
     outline: none;
-}
+    overflow-x: visible;
+    overflow-y: visible;
+    
+} 
 
-#line {
-    /* z-index: 99; */
+ #line {
     position: absolute;
     top: 75px; 
     left: 75px; 
@@ -98,30 +91,18 @@ body {
     transform: rotate(0.7853981633974483rad);
 }
 
-#lineInput
-{
-    position: relative;
+#lineInput {
+    position: absolute;
     z-index: 100;
-    width: 40px;
     left: 50%;
-    border-radius: 10px; 
-    margin: auto;
     background: #071a39;
-    margin-top: -15px; 
+    margin-top: -15px;
+    margin-left: -30px;
+    width: 60px;
     color: #fff;
-    padding-left: 20px; 
+    padding: 10px;
+    border-radius: 10px;
+} 
 
-}
 
 
-#field {
-    /* position: relative; */
-    border: 3px solid pink;
-    overflow-y: auto !important;
-    overflow-x: auto !important;
-    width: 100vw!important;
-    height: 100vh !important;
-    min-height: 100%;
-    min-width: 100%;
-    margin-top: 100px;
-}
