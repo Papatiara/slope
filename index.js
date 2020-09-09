@@ -66,19 +66,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         circle1.style.left = `${x1}px`;
         circle1.style.top = `${y1}px`;
+        circle2.style.left = `${x2}px`;
+        circle2.style.top = `${y2}px`;
 
+        if (typeof w !== "string") {
         setTimeout(() =>{
             let midPoint = getLineInput[0].getBoundingClientRect()
             midPointLeft = Math.trunc(midPoint.left);
             midPointTop = Math.trunc(midPoint.top);
             let top = (midPointTop * 2) - y1;
             let left = (midPointLeft * 2) - x1;
-            circle2.style.left = `${left}px`;
-            circle2.style.top = `${top}px`;
+            circle2.style.left = `${left - 75}px`;
+            circle2.style.top = `${top -75}px`;
             inputsCircle2[0].setAttribute("value", left);
             inputsCircle2[1].setAttribute("value", top);
         }, 0);
-
+    }
         getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
         getLine.style.width = `${width+75}px`;
         getLine.style.top = `${y1 + 75}px`;
