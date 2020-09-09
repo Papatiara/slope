@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let x1 = getElement.style.left === "" ? 0 : parseInt(getElement.style.left.split("p")[0])
     let x2 = getCircle2.style.left === "" ? 400 : parseInt(getCircle2.style.left.split("p")[0])
 
-// slope function
+    // slope function
     const formulaTan = (x, y) => {
         let slope = y / x;
         let radians = Math.atan(slope)
@@ -33,17 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return radians;
     }
 
-// line function 
+    // line function 
     const lineSize = (x, y) => {
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
     }
 
-// left circle left margin
+    // left circle left margin
     const circle2Left = (x, y) => {
         let width = Number(getLine.style.width.split('p').slice(0, getLine.style.width.indexOf('.')));
-        console.log(width)
         let rad = formulaTan(x, y)
-
         c = width;
         b = Math.sin(rad) * c
         a = Math.sqrt(Math.pow(c, 2) - Math.pow(b, 2))
@@ -51,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return a;
     }
 
-// left circle top margin
+    // left circle top margin
 
     const circle2Top = (x, y) => {
         let width = Number(getLine.style.width.split('p').slice(0, getLine.style.width.indexOf('.')));
@@ -105,64 +103,77 @@ document.addEventListener("DOMContentLoaded", () => {
     // InputFields eventListener
 
 
-    let inputsFields = document.querySelectorAll("input");
-    inputsFields.forEach((el) => {
-        el.addEventListener("keyup", (event) => {
-            if (event.target.value === 0 && event.key === "Backspace" || typeof Number(event.key) !== "number") {
-                return 0;
+    // let inputsFields = document.querySelectorAll("input");
+    // inputsFields.forEach((el) => {
+    document.addEventListener("input", (event) => {
+        // if (typeof Number(event.target.value) !== "number") {
+        //     return 0;
+        // }
+
+        let inputParent = event.target.offsetParent;
+        let width = getLine.style.width;
+        let x = x2 - x1;
+        let y = y2 - y1;
+        console.log(event.target.id)
+
+        if (event.target.id !== "lineInput" && event.target.id !== "inputline") {
+            if (event.target.id === "X2" || event.target.id === "X1") {
+                if (event.target.id === "X1") {
+                    x1 = Number(event.target.value)
+                    x = x2 - x1;
+                    inputParent.style.left = `${Number(event.target.value)}px`
+                    getLine.style.left = `${Number(event.target.value) + 75}px`
+
+                } else {
+                    x2 = Number(event.target.value)
+                    x = x2 - x1;
+                    inputParent.style.left = `${Number(event.target.value)}px`
+                }
             }
+            if (event.target.id === "Y2" || event.target.id === "Y1") {
+                if (event.target.id === "Y1") {
+                    y1 = Number(event.target.value)
+                    y = y2 - y1;
+                    inputParent.style.top = `${Number(event.target.value)}px`
+                    getLine.style.top = `${Number(event.target.value) + 75}px`
 
-            let inputParent = event.target.offsetParent;
-            let width = getLine.style.width;
-            let x = x2 - x1;
-            let y = y2 - y1;
-
-
-            if (event.target.id !== "lineInput") {
-                if (event.target.id === "X2" || event.target.id === "X1") {
-                    if (event.target.id === "X1") {
-                        x1 = Number(event.target.value)
-                        x = x2 - x1;
-                        inputParent.style.left = `${Number(event.target.value)}px`
-                        getLine.style.left = `${Number(event.target.value) + 75}px`
-
-                    } else {
-                        x2 = Number(event.target.value)
-                        x = x2 - x1;
-                        inputParent.style.left = `${Number(event.target.value)}px`
-                    }
+                } else {
+                    y2 = Number(event.target.value)
+                    y = y2 - y1;
+                    x = x2 - x1;
+                    inputParent.style.top = `${Number(event.target.value) - 75}px`
                 }
-                if (event.target.id === "Y2" || event.target.id === "Y1") {
-                    if (event.target.id === "Y1") {
-                        y1 = Number(event.target.value)
-                        y = y2 - y1;
-                        inputParent.style.top = `${Number(event.target.value)}px`
-                        getLine.style.top = `${Number(event.target.value) + 75}px`
+            }
+            getLineInput.setAttribute('value', width.split('p')[0].slice(0, width.indexOf('.')))
+            getLine.style.width = `${lineSize(x, y)}px`
+            getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
 
-                    } else {
-                        y2 = Number(event.target.value)
-                        y = y2 - y1;
-                        x = x2 - x1;
-                        inputParent.style.top = `${Number(event.target.value) - 75}px`
-                    }
-                }
-                getLineInput.setAttribute('value', width.split('p')[0].slice(0, width.indexOf('.')))
-                getLine.style.width = `${lineSize(x, y)}px`
-                getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
-
+        } else {
+            let inputValue = getCircle2.querySelectorAll('input');
+            getLine.style.width = `${Number(event.target.value)}px`
+            getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
+            console.log(x1)
+            if (x1 > 0 && x1 < x2) {
+                console.log("func", circle2Left(x, y) + x1)
+                getCircle2.style.top = `${circle2Top(x, y)}px`
+                getCircle2.style.left = `${circle2Left(x, y) + x1}px`
+                inputValue[0] = circle2Top(x, y) + x1
+                inputValue[1] = circle2Top(x, y)
+            } else if (x1 > 0 && x1 > x2) {
+                getCircle2.style.top = `${circle2Top(x, y) + y1}px`
+                getCircle2.style.left = `${400}px`
+                inputValue[0] = 400;
+                inputValue[1] = circle2Top(x, y) + y1
             } else {
-                let inputValue = getCircle2.querySelectorAll('input');
-                getLine.style.width = `${Number(event.target.value)}px`
-                y2 = Math.trunc(circle2Top(x, y) + y1);
-                x2 = Math.trunc(circle2Left(x, y) + x1);
-                inputValue[0].setAttribute("value", x2 );
-                inputValue[1].setAttribute("value", y2 );
                 getCircle2.style.top = `${circle2Top(x, y)}px`
                 getCircle2.style.left = `${circle2Left(x, y)}px`
+                inputValue[0] = circle2Top(x, y)
+                inputValue[1] = circle2Top(x, y)
             }
+        }
 
-        });
-    })
+    });
+    // })
 
     // remove ghost image when dragging an element
 
