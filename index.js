@@ -1,21 +1,36 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    const circle1 = document.querySelector(".circle");
+    const circle2 = document.querySelector(".circle2");
 
-    const getElement = document.querySelector(".circle")
-    const getCircle2 = document.querySelector(".circle2")
+    const inputsCircle1 = circle1.querySelectorAll('input');
+    const inputsCircle2 = circle2.querySelectorAll('input');
+
+    const getLine = document.getElementById("line");
+    const getLineInput = getLine.querySelectorAll("input");
+
+   ;
+   
+
+    let x1 = Number(inputsCircle1[0].value);
+    let y1 = Number(inputsCircle1[1].value);
+    let x2 = Number(inputsCircle2[0].value);
+    let y2 = Number(inputsCircle2[1].value);
 
 
-    const getLine = document.getElementById("line")
 
-    const getLineInput = document.getElementById("lineInput")
+    /// Distance formula
+    /// Input: integers => x and y coordinates;
+    /// Output: integer =>  width
+    const findWidth = (x, y) => {
+        return Math.trunc(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)))
+    }
 
-    let y1 = getElement.style.top === "" ? 0 : parseInt(getElement.style.top.split("p")[0])
-    let y2 = getCircle2.style.top === "" ? 400 : parseInt(getCircle2.style.top.split("p")[0])
-    let x1 = getElement.style.left === "" ? 0 : parseInt(getElement.style.left.split("p")[0])
-    let x2 = getCircle2.style.left === "" ? 400 : parseInt(getCircle2.style.left.split("p")[0])
+    // Slope Formula
+    /// Input: integers => x and y coordinates;
+    /// Output: decimal =>  tangent in radians;
 
-    // slope function
     const formulaTan = (x, y) => {
         let slope = y / x;
         let radians = Math.atan(slope)
@@ -32,159 +47,93 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return radians;
     }
+  
+    // Set line and circles in the screen
+    // Input: 5 integers=> each circle coordinates and optional parameter - line distance ;
+    // Output:void;
 
-    // line function 
-    const lineSize = (x, y) => {
-        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
-    }
-
-    // left circle left margin
-    const circle2Left = (x, y) => {
-        let width = Number(getLine.style.width.split('p').slice(0, getLine.style.width.indexOf('.')));
-        let rad = formulaTan(x, y)
-        c = width;
-        b = Math.sin(rad) * c
-        a = Math.sqrt(Math.pow(c, 2) - Math.pow(b, 2))
-
-        return a;
-    }
-
-    // left circle top margin
-
-    const circle2Top = (x, y) => {
-        let width = Number(getLine.style.width.split('p').slice(0, getLine.style.width.indexOf('.')));
-        let rad = formulaTan(x, y)
-
-        c = width
-        b = Math.sin(rad) * c
-        a = Math.sqrt(Math.pow(c, 2) - Math.pow(b, 2))
-        return b;
-    }
-
-    // Dragover eventListener
-
-    let beingDragged = ''
-    const event1 = document.addEventListener("dragover", (e) => {
-        e.preventDefault();
-
-        let inputValue = beingDragged.querySelectorAll('input');
-
-        let x = beingDragged.classList[0] === "circle" ? x2 - e.clientX : e.clientX - x1;
-        let y = beingDragged.classList[0] === "circle" ? y2 - e.clientY : e.clientY - y1;
-
-        let width = getLine.style.width;
-
-        getLine.style.width = `${lineSize(x, y)}px`
-        getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
-        getLineInput.setAttribute('value', width.split('p')[0].slice(0, width.indexOf('.')))
-
-        inputValue[0].setAttribute('value', e.clientX);
-        inputValue[1].setAttribute('value', e.clientY);
-
-        beingDragged.style.top = `${e.clientY}px`
-        beingDragged.style.left = `${e.clientX}px`
-
-
-
-        if (beingDragged.classList[0] === "circle") {
-            getLine.style.left = `${e.clientX + 75}px`
-            getLine.style.top = `${e.clientY + 75}px`
-            x1 = e.clientX
-            y1 = e.clientY
-        } else {
-            x2 = e.clientX
-            y2 = e.clientY
-        }
-
-    }, false);
-
-
-
-    // InputFields eventListener
-
-
-    // let inputsFields = document.querySelectorAll("input");
-    // inputsFields.forEach((el) => {
-    document.addEventListener("input", (event) => {
-        // if (typeof Number(event.target.value) !== "number") {
-        //     return 0;
-        // }
-
-        let inputParent = event.target.offsetParent;
-        let width = getLine.style.width;
+    const setPoints = (x1, x2, y1, y2, w="width") => {
         let x = x2 - x1;
         let y = y2 - y1;
-        console.log(event.target.id)
+        let width = typeof w === "string" ? findWidth(x, y) : w;
 
-        if (event.target.id !== "lineInput" && event.target.id !== "inputline") {
-            if (event.target.id === "X2" || event.target.id === "X1") {
-                if (event.target.id === "X1") {
-                    x1 = Number(event.target.value)
-                    x = x2 - x1;
-                    inputParent.style.left = `${Number(event.target.value)}px`
-                    getLine.style.left = `${Number(event.target.value) + 75}px`
 
-                } else {
-                    x2 = Number(event.target.value)
-                    x = x2 - x1;
-                    inputParent.style.left = `${Number(event.target.value)}px`
-                }
-            }
-            if (event.target.id === "Y2" || event.target.id === "Y1") {
-                if (event.target.id === "Y1") {
-                    y1 = Number(event.target.value)
-                    y = y2 - y1;
-                    inputParent.style.top = `${Number(event.target.value)}px`
-                    getLine.style.top = `${Number(event.target.value) + 75}px`
+        inputsCircle1[0].setAttribute("value", x1);
+        inputsCircle1[1].setAttribute("value", y1);
+        inputsCircle2[0].setAttribute("value", x2);
+        inputsCircle2[1].setAttribute("value", y2);
+        getLineInput[0].setAttribute("value", `${width}`);
 
-                } else {
-                    y2 = Number(event.target.value)
-                    y = y2 - y1;
-                    x = x2 - x1;
-                    inputParent.style.top = `${Number(event.target.value) - 75}px`
-                }
-            }
-            getLineInput.setAttribute('value', width.split('p')[0].slice(0, width.indexOf('.')))
-            getLine.style.width = `${lineSize(x, y)}px`
-            getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
+        circle1.style.left = `${x1}px`;
+        circle1.style.top = `${y1}px`;
 
+        setTimeout(() =>{
+            let midPoint = getLineInput[0].getBoundingClientRect()
+            midPointLeft = Math.trunc(midPoint.left);
+            midPointTop = Math.trunc(midPoint.top);
+            let top = (midPointTop * 2) - y1;
+            let left = (midPointLeft * 2) - x1;
+            circle2.style.left = `${left}px`;
+            circle2.style.top = `${top}px`;
+            inputsCircle2[0].setAttribute("value", left);
+            inputsCircle2[1].setAttribute("value", top);
+        }, 0);
+
+        getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
+        getLine.style.width = `${width+75}px`;
+        getLine.style.top = `${y1 + 75}px`;
+        getLine.style.left = `${x1 + 75}px`;
+    }
+
+
+    // Event listener = drag event
+    // set values of x1,y1,x2,y2
+    // Input:none;
+    // Return:function call setPoints with coordinates;
+
+
+    let beingDragged = circle2;
+
+    const dragEvent = document.addEventListener("dragover", (e) => {
+
+        if (beingDragged.classList.value === "circle") {
+            x1 = e.clientX;
+            y1 = e.clientY;
         } else {
-            let inputValue = getCircle2.querySelectorAll('input');
-            getLine.style.width = `${Number(event.target.value)}px`
-            getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
-            console.log(x1)
-            if (x1 > 0 && x1 < x2) {
-                console.log("func", circle2Left(x, y) + x1)
-                getCircle2.style.top = `${circle2Top(x, y)}px`
-                getCircle2.style.left = `${circle2Left(x, y) + x1}px`
-                inputValue[0] = circle2Top(x, y) + x1
-                inputValue[1] = circle2Top(x, y)
-            } else if (x1 > 0 && x1 > x2) {
-                getCircle2.style.top = `${circle2Top(x, y) + y1}px`
-                getCircle2.style.left = `${400}px`
-                inputValue[0] = 400;
-                inputValue[1] = circle2Top(x, y) + y1
-            } else {
-                getCircle2.style.top = `${circle2Top(x, y)}px`
-                getCircle2.style.left = `${circle2Left(x, y)}px`
-                inputValue[0] = circle2Top(x, y)
-                inputValue[1] = circle2Top(x, y)
-            }
+            x2 = e.clientX;
+            y2 = e.clientY;
         }
-
+        return setPoints(x1, x2, y1, y2)
     });
-    // })
 
-    // remove ghost image when dragging an element
+    // Event listener = input event
+    // set values of x1,y1,x2,y2 and width
+    // Input:none;
+    // Return:function call setPoints with coordinates;
+    
+    const inputEvent = document.addEventListener("input", (event) => {
+        x1 = event.target.id === "X1" ? Number(event.target.value) : x1;
+        y1 = event.target.id === "Y1" ? Number(event.target.value) : y1;
+        x2 = event.target.id === "X2" ? Number(event.target.value) : x2;
+        y2 = event.target.id === "Y2" ? Number(event.target.value) : y2;
+        let width = event.target.id === "lineInput" ? Number(event.target.value) : getLineInput[0].getAttribute("value")
+ 
+        return setPoints(x1, x2, y1, y2, width)
+    })
 
-    getCircle2.addEventListener("dragstart", (e) => {
+    // Event listener = drag start event
+    // set element beign drag
+    // Input:none;
+    // Return:void;
+
+    circle1.addEventListener("dragstart", (e) => {
         beingDragged = e.target;
         var img = new Image();
         img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
         e.dataTransfer.setDragImage(img, 0, 0);
     });
 
-    getElement.addEventListener("dragstart", (e) => {
+    circle2.addEventListener("dragstart", (e) => {
         beingDragged = e.target;
         var img = new Image();
         img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
@@ -194,3 +143,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
+
+
+
+
+
+
+
