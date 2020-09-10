@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let x2 = Number(inputsCircle2[0].value);
     let y2 = Number(inputsCircle2[1].value);
     let width = Number(getLineInput[0].value);
-
+    let beingDragged = circle2;
 
 
     /// Distance formula
@@ -84,10 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         inputsCircle2[0].value = x2;
         inputsCircle2[1].value = y2;
+
         getLineInput[0].value = width;
 
         circle1.style.left = `${x1}px`;
         circle1.style.top = `${y1}px`;
+        
         circle2.style.left = `${x2}px`;
         circle2.style.top = `${y2}px`;
 
@@ -98,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (input && w < 1440) {
             setTimeout(() => {
-                let midPoint = getLineInput[0].getBoundingClientRect()
+                let midPoint = getLineInput[0].getBoundingClientRect();
                 let midPointLeft = Math.trunc(midPoint.left);
                 let midPointTop = Math.trunc(midPoint.top);
                 let top = (midPointTop * 2) - y1;
@@ -113,10 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
         } if (input && w > 1440) {
             let top = Math.trunc(circle2Top(x, y, width));
             let left = Math.trunc(circle2Left(x, y, width));
-            circle2.style.left = `${circle2Left(x, y, width)}px`;
-            circle2.style.top = `${circle2Top(x, y, width)}px`;
-            inputsCircle2[0].value = left;
-            inputsCircle2[1].value = top;
+            circle2.style.left = x1 > 0 ? `${circle2Left(x, y, width) + x1}px` :` ${circle2Left(x, y, width)}px` ;
+            circle2.style.top = y1 > 0 ? `${circle2Top(x, y, width) + y1}px` : `${circle2Top(x, y, width)}px`;
+            inputsCircle2[0].value = x1 > 0 ? left + x1 : left;
+            inputsCircle2[1].value = y1 > 0 ? top + y1 : top;
         }
   
     }
@@ -128,8 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Return:function call setPoints with coordinates, a boolean value 
     //(false to notify that is not from the input function) - and width;
 
-
-    let beingDragged = circle2;
 
     const dragEvent = document.addEventListener("dragover", (e) => {
 
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     // Event listener = drag start event
-    // set element being drag
+    // set element being dragged
     // remove ghost image when dragging
     // Input:none;
     // Return:void;

@@ -10,11 +10,6 @@ body, html {
 
 }
 
-#wrapper {
-    position: relative;
-    height: 900px!important; 
-    width: 100%!important; 
-}
 #container {
     position: absolute;
     overflow-x: visible;
