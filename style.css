@@ -27,7 +27,7 @@ body, html {
 }
 .circle {
     position: absolute;
-    z-index: 99;
+    z-index: 9;
     width: 150px;
     height: 150px;
     top: 0px;
@@ -52,12 +52,11 @@ body, html {
     border: none;
     border-bottom: 1px solid black;
     outline: none;
-    overflow-x: visible;
-    overflow-y: visible;
 } 
 
  .circle2 {
     position: absolute;
+    z-index: 150px;
     width: 150px;
     height: 150px;
     top: 400px;
@@ -69,8 +68,6 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-x: visible;
-    overflow-y: visible;
 }
 
 
@@ -82,8 +79,6 @@ body, html {
     border: none;
     border-bottom: 1px solid black;
     outline: none;
-    overflow-x: visible;
-    overflow-y: visible;
     
 } 
 
@@ -101,7 +96,6 @@ body, html {
 
 #lineInput {
     position: absolute;
-    /* z-index: 100; */
     left: 50%;
     background: #071a39;
     margin-top: -15px;
@@ -113,20 +107,3 @@ body, html {
 
 } 
 
-#test {
-    position: absolute;
-    margin: auto;
-    /* display: block; */
-    top: 45px;
-    left: 150px; 
-    background: red;
-    transform-origin: 0 0;
-    transform: rotate(0.7853981633974483rad);
-    width: 700px;
-    height: 2px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    /* z-index: ; */
-
-}
