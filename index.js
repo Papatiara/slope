@@ -52,10 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Input: 5 integers=> each circle coordinates and optional parameter - line distance ;
     // Output:void;
 
-    const setPoints = (x1, x2, y1, y2, w="width") => {
+    const setPoints = (x1, x2, y1, y2, w) => {
         let x = x2 - x1;
         let y = y2 - y1;
-        let width = typeof w === "string" ? findWidth(x, y) : w;
+        let width = w === undefined ? findWidth(x, y) : w;
 
 
         inputsCircle1[0].setAttribute("value", x1);
@@ -69,11 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
         circle2.style.left = `${x2}px`;
         circle2.style.top = `${y2}px`;
 
-        if (typeof w !== "string") {
+        if (w !== undefined ) {
         setTimeout(() =>{
             let midPoint = getLineInput[0].getBoundingClientRect()
-            midPointLeft = Math.trunc(midPoint.left);
-            midPointTop = Math.trunc(midPoint.top);
+            let midPointLeft = Math.trunc(midPoint.left);
+            let midPointTop = Math.trunc(midPoint.top);
             let top = (midPointTop * 2) - y1;
             let left = (midPointLeft * 2) - x1;
             circle2.style.left = `${left - 75}px`;
@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
             inputsCircle2[0].setAttribute("value", left);
             inputsCircle2[1].setAttribute("value", top);
         }, 0);
+
     }
         getLine.style.transform = `rotate(${formulaTan(x, y)}rad)`
         getLine.style.width = `${width+75}px`;
